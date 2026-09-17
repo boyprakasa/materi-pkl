@@ -6,13 +6,29 @@ ini_set('display_errors', '1');
 require_once __DIR__ . '/../config/session.php';
 require_once __DIR__ . '/../config/database.php';
 
-$stmt = $pdo->query("
-    SELECT *
-    FROM siswa
-    ORDER BY id DESC
-");
+http_response_code(200);
 
-$siswa = $stmt->fetchAll();
+try {
+
+    $stmt = $pdo->query("
+        SELECT *
+        FROM siswa
+        ORDER BY id DESC
+    ");
+
+    $siswa = $stmt->fetchAll();
+} catch (PDOException $e) {
+
+    http_response_code(500);
+
+    $_SESSION['error'] = 'Gagal mengambil data siswa.';
+
+    $siswa = [];
+}
+
+$old = $_SESSION['old'] ?? [];
+
+unset($_SESSION['old']);
 
 ?>
 
@@ -34,28 +50,28 @@ $siswa = $stmt->fetchAll();
 
 <body>
 
-    <?php if (isset($_SESSION['success'])): ?>
-
-        <div class="alert alert-success">
-            <?= htmlspecialchars($_SESSION['success']) ?>
-        </div>
-
-        <?php unset($_SESSION['success']); ?>
-
-    <?php endif; ?>
-
-
-    <?php if (isset($_SESSION['error'])): ?>
-
-        <div class="alert alert-error">
-            <?= htmlspecialchars($_SESSION['error']) ?>
-        </div>
-
-        <?php unset($_SESSION['error']); ?>
-
-    <?php endif; ?>
-
     <div class="container">
+
+        <?php if (isset($_SESSION['success'])): ?>
+
+            <div class="alert alert-success">
+                <?= htmlspecialchars($_SESSION['success']) ?>
+            </div>
+
+            <?php unset($_SESSION['success']); ?>
+
+        <?php endif; ?>
+
+
+        <?php if (isset($_SESSION['error'])): ?>
+
+            <div class="alert alert-error">
+                <?= htmlspecialchars($_SESSION['error']) ?>
+            </div>
+
+            <?php unset($_SESSION['error']); ?>
+
+        <?php endif; ?>
 
         <h1>Data Siswa</h1>
 
@@ -68,7 +84,7 @@ $siswa = $stmt->fetchAll();
                     <code class="language-html">&lt;input type="text" id="nis" name="nis" required&gt;</code>
                 </div>
 
-                <input type="text" id="nis" name="nis" required>
+                <input type="text" id="nis" name="nis" value="<?= $old['nis'] ?? '' ?>" required>
             </div>
 
             <div class="form-group">
@@ -78,7 +94,7 @@ $siswa = $stmt->fetchAll();
                     <code class="language-html">&lt;input type="text" id="nama" name="nama" required&gt;</code>
                 </div>
 
-                <input type="text" id="nama" name="nama" required>
+                <input type="text" id="nama" name="nama" value="<?= $old['nama'] ?? '' ?>" required>
             </div>
 
             <div class="form-group">
@@ -88,7 +104,7 @@ $siswa = $stmt->fetchAll();
                     <code class="language-html">&lt;input type="email" id="email" name="email"&gt;</code>
                 </div>
 
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" value="<?= $old['email'] ?? '' ?>">
             </div>
 
             <div class="form-group">
@@ -98,7 +114,7 @@ $siswa = $stmt->fetchAll();
                     <code class="language-html">&lt;input type="tel" id="no_hp" name="no_hp"&gt;</code>
                 </div>
 
-                <input type="tel" id="no_hp" name="no_hp">
+                <input type="tel" id="no_hp" name="no_hp" value="<?= $old['no_hp'] ?? '' ?>">
             </div>
 
             <div class="form-group">
@@ -112,12 +128,12 @@ $siswa = $stmt->fetchAll();
                 </div>
 
                 <label>
-                    <input type="radio" name="jenis_kelamin" value="L" required>
+                    <input type="radio" name="jenis_kelamin" value="L" required <?= (($old['jenis_kelamin'] ?? '') === 'L') ? 'checked' : '' ?>>
                     Laki-laki
                 </label>
 
                 <label>
-                    <input type="radio" name="jenis_kelamin" value="P">
+                    <input type="radio" name="jenis_kelamin" value="P" <?= (($old['jenis_kelamin'] ?? '') === 'P') ? 'checked' : '' ?>>
                     Perempuan
                 </label>
 
@@ -134,19 +150,26 @@ $siswa = $stmt->fetchAll();
                 </div>
 
                 <select id="kelas" name="kelas" required>
+                    <option value="">-- Pilih Kelas --</option>
 
-                    <option value="">
-                        -- Pilih Kelas --
-                    </option>
+                    <?php
+                    $kelasOptions = [
+                        'X RPL 1',
+                        'X RPL 2',
+                        'XI RPL 1',
+                        'XI RPL 2',
+                        'XII RPL 1',
+                        'XII RPL 2',
+                    ];
+                    ?>
 
-                    <option value="X RPL 1">
-                        X RPL 1
-                    </option>
-
-                    <option value="X RPL 2">
-                        X RPL 2
-                    </option>
-
+                    <?php foreach ($kelasOptions as $kelas): ?>
+                        <option
+                            value="<?= htmlspecialchars($kelas) ?>"
+                            <?= (($old['kelas'] ?? '') === $kelas) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($kelas) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
 
             </div>
@@ -166,7 +189,8 @@ $siswa = $stmt->fetchAll();
                 <input
                     type="date"
                     id="tanggal_lahir"
-                    name="tanggal_lahir">
+                    name="tanggal_lahir"
+                    value="<?= htmlspecialchars($old['tanggal_lahir'] ?? '') ?>">
 
             </div>
 
@@ -185,7 +209,7 @@ $siswa = $stmt->fetchAll();
                 <textarea
                     id="alamat"
                     name="alamat"
-                    rows="4"></textarea>
+                    rows="4"><?= htmlspecialchars($old['alamat'] ?? '') ?></textarea>
 
             </div>
 

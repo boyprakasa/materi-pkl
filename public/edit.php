@@ -1,31 +1,65 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
+require_once __DIR__ . '/../config/session.php';
 require_once __DIR__ . '/../config/database.php';
 
 $id = $_GET['id'] ?? null;
 
-if (!$id) {
-    die('ID siswa tidak ditemukan.');
+if (!$id || !filter_var($id, FILTER_VALIDATE_INT)) {
+
+    http_response_code(404);
+
+    $_SESSION['error'] = 'ID siswa tidak valid.';
+
+    header('Location: index.php');
+    exit;
 }
 
-$stmt = $pdo->prepare("
-    SELECT *
-    FROM siswa
-    WHERE id = :id
-");
+try {
 
-$stmt->execute([
-    ':id' => $id
-]);
+    $stmt = $pdo->prepare("
+        SELECT *
+        FROM siswa
+        WHERE id = :id
+    ");
 
-$siswa = $stmt->fetch();
+    $stmt->execute([
+        'id' => $id,
+    ]);
 
-if (!$siswa) {
-    die('Data siswa tidak ditemukan.');
+    $siswa = $stmt->fetch();
+
+    if (!$siswa) {
+
+        http_response_code(404);
+
+        $_SESSION['error'] = 'Data siswa tidak ditemukan.';
+
+        header('Location: index.php');
+        exit;
+    }
+} catch (PDOException $e) {
+
+    http_response_code(500);
+
+    $_SESSION['error'] = 'Gagal mengambil data siswa.';
+
+    header('Location: index.php');
+    exit;
 }
+
+$old = $_SESSION['old'] ?? [];
+
+unset($_SESSION['old']);
+
+$kelasOptions = [
+    'X RPL 1',
+    'X RPL 2',
+    'XI RPL 1',
+    'XI RPL 2',
+    'XII RPL 1',
+    'XII RPL 2',
+];
 
 ?>
 
@@ -50,6 +84,26 @@ if (!$siswa) {
 
     <div class="container">
 
+        <?php if (isset($_SESSION['error'])): ?>
+
+            <div class="alert alert-error">
+                <?= htmlspecialchars($_SESSION['error']) ?>
+            </div>
+
+            <?php unset($_SESSION['error']); ?>
+
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['success'])): ?>
+
+            <div class="alert alert-success">
+                <?= htmlspecialchars($_SESSION['success']) ?>
+            </div>
+
+            <?php unset($_SESSION['success']); ?>
+
+        <?php endif; ?>
+
         <h1>Edit Data Siswa</h1>
 
         <form action="update.php" method="POST">
@@ -69,7 +123,7 @@ if (!$siswa) {
                     type="text"
                     id="nis"
                     name="nis"
-                    value="<?= htmlspecialchars($siswa['nis']) ?>"
+                    value="<?= htmlspecialchars($old['nis'] ?? $siswa['nis']) ?>"
                     required>
 
             </div>
@@ -84,7 +138,7 @@ if (!$siswa) {
                     type="text"
                     id="nama"
                     name="nama"
-                    value="<?= htmlspecialchars($siswa['nama']) ?>"
+                    value="<?= htmlspecialchars($old['nama'] ?? $siswa['nama']) ?>"
                     required>
 
             </div>
@@ -99,7 +153,7 @@ if (!$siswa) {
                     type="email"
                     id="email"
                     name="email"
-                    value="<?= htmlspecialchars($siswa['email']) ?>">
+                    value="<?= htmlspecialchars($old['email'] ?? $siswa['email']) ?>">
 
             </div>
 
@@ -113,7 +167,7 @@ if (!$siswa) {
                     type="tel"
                     id="no_hp"
                     name="no_hp"
-                    value="<?= htmlspecialchars($siswa['no_hp']) ?>">
+                    value="<?= htmlspecialchars($old['no_hp'] ?? $siswa['no_hp']) ?>">
 
             </div>
 
@@ -128,10 +182,7 @@ if (!$siswa) {
                         type="radio"
                         name="jenis_kelamin"
                         value="L"
-                        <?= $siswa['jenis_kelamin'] === 'L'
-                            ? 'checked'
-                            : ''
-                        ?>
+                        <?= (($old['jenis_kelamin'] ?? $siswa['jenis_kelamin']) === 'L') ? 'checked' : '' ?>
                         required>
 
                     Laki-laki
@@ -142,10 +193,7 @@ if (!$siswa) {
                         type="radio"
                         name="jenis_kelamin"
                         value="P"
-                        <?= $siswa['jenis_kelamin'] === 'P'
-                            ? 'checked'
-                            : ''
-                        ?>>
+                        <?= (($old['jenis_kelamin'] ?? $siswa['jenis_kelamin']) === 'L') ? 'checked' : '' ?>>
 
                     Perempuan
                 </label>
@@ -158,68 +206,19 @@ if (!$siswa) {
                     Kelas
                 </label>
 
-                <select
-                    id="kelas"
-                    name="kelas"
-                    required>
+                <select id="kelas" name="kelas" required>
 
-                    <option value="">
-                        -- Pilih Kelas --
-                    </option>
+                    <option value="">-- Pilih Kelas --</option>
 
-                    <option
-                        value="X RPL 1"
-                        <?= $siswa['kelas'] === 'X RPL 1'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        X RPL 1
-                    </option>
+                    <?php foreach ($kelasOptions as $kelas): ?>
 
-                    <option
-                        value="X RPL 2"
-                        <?= $siswa['kelas'] === 'X RPL 2'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        X RPL 2
-                    </option>
+                        <option
+                            value="<?= htmlspecialchars($kelas) ?>"
+                            <?= (($old['kelas'] ?? $siswa['kelas']) === $kelas) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($kelas) ?>
+                        </option>
 
-                    <option
-                        value="XI RPL 1"
-                        <?= $siswa['kelas'] === 'XI RPL 1'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        XI RPL 1
-                    </option>
-
-                    <option
-                        value="XI RPL 2"
-                        <?= $siswa['kelas'] === 'XI RPL 2'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        XI RPL 2
-                    </option>
-
-                    <option
-                        value="XII RPL 1"
-                        <?= $siswa['kelas'] === 'XII RPL 1'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        XII RPL 1
-                    </option>
-
-                    <option
-                        value="XII RPL 2"
-                        <?= $siswa['kelas'] === 'XII RPL 2'
-                            ? 'selected'
-                            : ''
-                        ?>>
-                        XII RPL 2
-                    </option>
+                    <?php endforeach; ?>
 
                 </select>
 
@@ -235,7 +234,7 @@ if (!$siswa) {
                     type="date"
                     id="tanggal_lahir"
                     name="tanggal_lahir"
-                    value="<?= htmlspecialchars($siswa['tanggal_lahir']) ?>">
+                    value="<?= htmlspecialchars($old['tanggal_lahir'] ?? $siswa['tanggal_lahir'] ?? '') ?>">
 
             </div>
 
@@ -248,7 +247,7 @@ if (!$siswa) {
                 <textarea
                     id="alamat"
                     name="alamat"
-                    rows="4"><?= htmlspecialchars($siswa['alamat']) ?></textarea>
+                    rows="4"><?= htmlspecialchars($old['alamat'] ?? $siswa['alamat'] ?? '') ?></textarea>
 
             </div>
 
