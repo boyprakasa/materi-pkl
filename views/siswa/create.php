@@ -31,7 +31,7 @@
                 <select name="kelas_id" class="form-select">
                     <option value="">-- Pilih Kelas (opsional) --</option>
                     <?php foreach ($data['daftar_kelas'] as $k): ?>
-                        <option value="<?= $k['id'] ?>"><?= htmlspecialchars($k['nama_kelas']) ?></option>
+                        <option value="<?= $k['id'] ?>"><?= htmlspecialchars($k['kelas'] . ' - ' . $k['nama_jurusan']) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

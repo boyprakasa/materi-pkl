@@ -1,4 +1,5 @@
 <?php
+
 /**
  * models/Siswa.php
  * Semua query database untuk tabel "siswa" ada di sini.
@@ -19,7 +20,7 @@ class Siswa
     public function getAll(): array
     {
         $stmt = $this->db->query(
-            "SELECT siswa.*, kelas.nama_kelas
+            "SELECT siswa.*, kelas.nama_jurusan, kelas.kelas AS nama_kelas
              FROM siswa
              LEFT JOIN kelas ON siswa.kelas_id = kelas.id
              ORDER BY siswa.nama_siswa ASC"

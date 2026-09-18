@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS guru (
 -- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS kelas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_kelas VARCHAR(50) NOT NULL,
-    tingkat VARCHAR(10) NOT NULL,
+    nama_jurusan VARCHAR(50) NOT NULL,
+    kelas VARCHAR(10) NOT NULL,
     wali_kelas_id INT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (wali_kelas_id) REFERENCES guru(id) ON DELETE SET NULL
@@ -53,9 +53,18 @@ INSERT INTO guru (nip, nama_guru, jenis_kelamin, alamat, no_hp) VALUES
 ('198001012010011001', 'Budi Santoso, S.Pd', 'Laki-laki', 'Jl. Merdeka No. 1, Surabaya', '081234567890'),
 ('198203152011012002', 'Siti Aminah, S.Pd', 'Perempuan', 'Jl. Anggrek No. 5, Surabaya', '081298765432');
 
-INSERT INTO kelas (nama_kelas, tingkat, wali_kelas_id) VALUES
-('VII-A', '7', 1),
-('VIII-A', '8', 2);
+INSERT INTO kelas (nama_jurusan, kelas, wali_kelas_id) VALUES
+('RPL', 'X', 1),
+('TKJ', 'XI', 2);
+
+-- =========================================================
+-- MIGRATION (jalankan ini SAJA kalau database "db_sekolah"
+-- sudah pernah dibuat sebelumnya dengan kolom lama
+-- nama_kelas & tingkat). Kalau baru install pertama kali,
+-- abaikan bagian ini.
+-- =========================================================
+-- ALTER TABLE kelas CHANGE nama_kelas nama_jurusan VARCHAR(50) NOT NULL;
+-- ALTER TABLE kelas CHANGE tingkat kelas VARCHAR(10) NOT NULL;
 
 INSERT INTO siswa (nis, nama_siswa, jenis_kelamin, tanggal_lahir, alamat, kelas_id) VALUES
 ('2024001', 'Ahmad Fauzi', 'Laki-laki', '2011-05-12', 'Jl. Kenanga No. 3, Surabaya', 1),

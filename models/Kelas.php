@@ -1,4 +1,5 @@
 <?php
+
 /**
  * models/Kelas.php
  * Semua query database untuk tabel "kelas" ada di sini.
@@ -22,7 +23,7 @@ class Kelas
             "SELECT kelas.*, guru.nama_guru AS wali_kelas
              FROM kelas
              LEFT JOIN guru ON kelas.wali_kelas_id = guru.id
-             ORDER BY kelas.nama_kelas ASC"
+             ORDER BY kelas.nama_jurusan ASC, kelas.kelas ASC"
         );
         return $stmt->fetchAll();
     }
@@ -37,11 +38,11 @@ class Kelas
     public function create(array $data): bool
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO kelas (nama_kelas, tingkat, wali_kelas_id) VALUES (?, ?, ?)"
+            "INSERT INTO kelas (nama_jurusan, kelas, wali_kelas_id) VALUES (?, ?, ?)"
         );
         return $stmt->execute([
-            $data['nama_kelas'],
-            $data['tingkat'],
+            $data['nama_jurusan'],
+            $data['kelas'],
             $data['wali_kelas_id'] !== '' ? $data['wali_kelas_id'] : null,
         ]);
     }
@@ -49,11 +50,11 @@ class Kelas
     public function update($id, array $data): bool
     {
         $stmt = $this->db->prepare(
-            "UPDATE kelas SET nama_kelas = ?, tingkat = ?, wali_kelas_id = ? WHERE id = ?"
+            "UPDATE kelas SET nama_jurusan = ?, kelas = ?, wali_kelas_id = ? WHERE id = ?"
         );
         return $stmt->execute([
-            $data['nama_kelas'],
-            $data['tingkat'],
+            $data['nama_jurusan'],
+            $data['kelas'],
             $data['wali_kelas_id'] !== '' ? $data['wali_kelas_id'] : null,
             $id,
         ]);

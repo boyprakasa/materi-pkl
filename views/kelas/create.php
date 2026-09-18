@@ -4,12 +4,12 @@
     <div class="card-body">
         <form action="<?= BASE_URL ?>kelas/store" method="POST">
             <div class="mb-3">
-                <label class="form-label">Nama Kelas</label>
-                <input type="text" name="nama_kelas" class="form-control" placeholder="Contoh: VII-A" required>
+                <label class="form-label">Nama Jurusan</label>
+                <input type="text" name="nama_jurusan" class="form-control" placeholder="Contoh: RPL" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Tingkat</label>
-                <input type="text" name="tingkat" class="form-control" placeholder="Contoh: 7" required>
+                <label class="form-label">Kelas</label>
+                <input type="text" name="kelas" class="form-control" placeholder="Contoh: X" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Wali Kelas</label>

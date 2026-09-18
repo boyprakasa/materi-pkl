@@ -6,12 +6,12 @@
             <div class="mb-3">
                 <label class="form-label">NIS</label>
                 <input type="text" name="nis" class="form-control"
-                       value="<?= htmlspecialchars($data['siswa']['nis']) ?>" required>
+                    value="<?= htmlspecialchars($data['siswa']['nis']) ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Nama Siswa</label>
                 <input type="text" name="nama_siswa" class="form-control"
-                       value="<?= htmlspecialchars($data['siswa']['nama_siswa']) ?>" required>
+                    value="<?= htmlspecialchars($data['siswa']['nama_siswa']) ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Jenis Kelamin</label>
@@ -23,7 +23,7 @@
             <div class="mb-3">
                 <label class="form-label">Tanggal Lahir</label>
                 <input type="date" name="tanggal_lahir" class="form-control"
-                       value="<?= htmlspecialchars($data['siswa']['tanggal_lahir']) ?>">
+                    value="<?= htmlspecialchars($data['siswa']['tanggal_lahir']) ?>">
             </div>
             <div class="mb-3">
                 <label class="form-label">Alamat</label>
@@ -36,7 +36,7 @@
                     <?php foreach ($data['daftar_kelas'] as $k): ?>
                         <option value="<?= $k['id'] ?>"
                             <?= $k['id'] == $data['siswa']['kelas_id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($k['nama_kelas']) ?>
+                            <?= htmlspecialchars($k['kelas'] . ' - ' . $k['nama_jurusan']) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

@@ -4,14 +4,14 @@
     <div class="card-body">
         <form action="<?= BASE_URL ?>kelas/update/<?= $data['kelas']['id'] ?>" method="POST">
             <div class="mb-3">
-                <label class="form-label">Nama Kelas</label>
-                <input type="text" name="nama_kelas" class="form-control"
-                       value="<?= htmlspecialchars($data['kelas']['nama_kelas']) ?>" required>
+                <label class="form-label">Nama Jurusan</label>
+                <input type="text" name="nama_jurusan" class="form-control"
+                    value="<?= htmlspecialchars($data['kelas']['nama_jurusan']) ?>" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Tingkat</label>
-                <input type="text" name="tingkat" class="form-control"
-                       value="<?= htmlspecialchars($data['kelas']['tingkat']) ?>" required>
+                <label class="form-label">Kelas</label>
+                <input type="text" name="kelas" class="form-control"
+                    value="<?= htmlspecialchars($data['kelas']['kelas']) ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Wali Kelas</label>
