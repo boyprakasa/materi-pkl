@@ -232,3 +232,69 @@ Urutan di atas sengaja dari yang paling sederhana ke yang paling
 kompleks, supaya siswa terbiasa dulu dengan pola CRUD dasar sebelum
 menghadapi relasi banyak tabel dan logic tambahan (validasi, sesi,
 filter).
+
+## Acuan Tabel untuk Modul Lanjutan
+
+Struktur tabel berikut jadi acuan kolom & tipe data untuk 6 modul di
+atas. Silakan sesuaikan nama/tipe kalau kebutuhan tugas berbeda —
+ini hanya starting point.
+
+### 1. `mapel`
+
+| Kolom      | Tipe Data             | Keterangan        |
+| ---------- | --------------------- | ----------------- |
+| id         | INT AUTO_INCREMENT PK |                   |
+| kode_mapel | VARCHAR(10) NOT NULL  | Contoh: MTK, BIND |
+| nama_mapel | VARCHAR(100) NOT NULL |                   |
+
+### 2. `jadwal`
+
+| Kolom       | Tipe Data                                                      | Keterangan |
+| ----------- | -------------------------------------------------------------- | ---------- |
+| id          | INT AUTO_INCREMENT PK                                          |            |
+| kelas_id    | INT, FK → kelas(id)                                            |            |
+| mapel_id    | INT, FK → mapel(id)                                            |            |
+| guru_id     | INT, FK → guru(id)                                             |            |
+| hari        | ENUM('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu') NOT NULL |            |
+| jam_mulai   | TIME NOT NULL                                                  |            |
+| jam_selesai | TIME NOT NULL                                                  |            |
+
+### 3. `nilai`
+
+| Kolom       | Tipe Data                          | Keterangan             |
+| ----------- | ---------------------------------- | ---------------------- |
+| id          | INT AUTO_INCREMENT PK              |                        |
+| siswa_id    | INT, FK → siswa(id)                |                        |
+| mapel_id    | INT, FK → mapel(id)                |                        |
+| jenis_nilai | ENUM('Tugas','UTS','UAS') NOT NULL |                        |
+| nilai       | DECIMAL(5,2) NOT NULL              | Validasi 0–100 di form |
+| keterangan  | TEXT NULL                          |                        |
+
+### 4. `absensi`
+
+| Kolom      | Tipe Data                                    | Keterangan |
+| ---------- | -------------------------------------------- | ---------- |
+| id         | INT AUTO_INCREMENT PK                        |            |
+| siswa_id   | INT, FK → siswa(id)                          |            |
+| tanggal    | DATE NOT NULL                                |            |
+| status     | ENUM('Hadir','Izin','Sakit','Alpa') NOT NULL |            |
+| keterangan | TEXT NULL                                    |            |
+
+### 5. `tahun_ajaran`
+
+| Kolom             | Tipe Data                                            | Keterangan        |
+| ----------------- | ---------------------------------------------------- | ----------------- |
+| id                | INT AUTO_INCREMENT PK                                |                   |
+| nama_tahun_ajaran | VARCHAR(20) NOT NULL                                 | Contoh: 2025/2026 |
+| semester          | ENUM('Ganjil','Genap') NOT NULL                      |                   |
+| status            | ENUM('Aktif','Nonaktif') NOT NULL DEFAULT 'Nonaktif' |                   |
+
+### 6. `admin` (untuk modul Login)
+
+| Kolom        | Tipe Data                           | Keterangan                                        |
+| ------------ | ----------------------------------- | ------------------------------------------------- |
+| id           | INT AUTO_INCREMENT PK               |                                                   |
+| username     | VARCHAR(50) NOT NULL UNIQUE         |                                                   |
+| password     | VARCHAR(255) NOT NULL               | Simpan hasil `password_hash()`, jangan plain text |
+| nama_lengkap | VARCHAR(100) NULL                   |                                                   |
+| created_at   | TIMESTAMP DEFAULT CURRENT_TIMESTAMP |                                                   |
