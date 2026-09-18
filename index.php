@@ -1,4 +1,5 @@
 <?php
+
 /**
  * =====================================================================
  *  index.php — TUMPUAN APLIKASI
@@ -22,6 +23,16 @@
  */
 
 session_start();
+
+// ---------------------------------------------------------------------
+// 0. ERROR REPORTING (mode belajar/development)
+//    Menampilkan semua error PHP (termasuk warning & notice) langsung
+//    ke layar, supaya lebih mudah dipakai untuk belajar & debugging.
+//    WAJIB dimatikan (display_errors = 0) saat aplikasi sudah production.
+// ---------------------------------------------------------------------
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 // ---------------------------------------------------------------------
 // 1. CONFIG (pengaturan aplikasi + koneksi database)
