@@ -1,2 +1,31 @@
+# ================= Environment & Konfigurasi Sensitif =================
+.env
+config/local.php
+
+# ================= Dependency (jika nanti pakai Composer) =================
 /vendor/
-/.env
+composer.lock
+
+# ================= Log & Cache =================
+*.log
+/logs/
+/cache/
+
+# ================= File Sistem Operasi =================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ================= Editor / IDE =================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ================= Upload / File Sementara =================
+/public/uploads/
+*.tmp
+
+# ================= Database Lokal (kalau pakai SQLite) =================
+*.sqlite
+*.sql.bak
