@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * config/database.php
+ * Membuat koneksi ke database MySQL menggunakan PDO.
+ * Variabel $pdo di sini akan dipakai di semua Model (lewat "global $pdo").
+ *
+ * Sesuaikan DB_HOST, DB_NAME, DB_USER, DB_PASS dengan pengaturan
+ * MySQL/XAMPP/Laragon di komputer kamu.
+ */
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -14,21 +23,12 @@ $username = $_ENV['DB_USERNAME'];
 $password = $_ENV['DB_PASSWORD'];
 
 try {
-    $pdo = new PDO(
-        "mysql:host=$host;port=$port;dbname=$database;charset=utf8mb4",
-        $username,
-        $password
-    );
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
 
-    $pdo->setAttribute(
-        PDO::ATTR_ERRMODE,
-        PDO::ERRMODE_EXCEPTION
-    );
-
-    $pdo->setAttribute(
-        PDO::ATTR_DEFAULT_FETCH_MODE,
-        PDO::FETCH_ASSOC
-    );
+    // Supaya error langsung terlihat jelas (bagus untuk proses belajar)
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
+    die("Koneksi database gagal: " . $e->getMessage() .
+        "<br>Pastikan database telah sudah dibuat.");
 }
