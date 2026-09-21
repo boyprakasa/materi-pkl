@@ -59,7 +59,7 @@ $router->get('/nilai/edit/{id}', ['NilaiController', 'edit']);
 $router->post('/nilai/update/{id}', ['NilaiController', 'update']);
 $router->get('/nilai/delete/{id}', ['NilaiController', 'delete']);
 
-// ----------------------- CRUD Nilai -----------------------
+// ----------------------- CRUD Absensi -----------------------
 $router->get('/absensi', ['AbsensiController', 'index']);
 $router->get('/absensi/create', ['AbsensiController', 'create']);
 $router->post('/absensi/store', ['AbsensiController', 'store']);
