@@ -32,7 +32,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Nilai</label>
-                <input type="number" min="0" max="100" minlength="1" maxlength="3" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>" required>
+                <input type="number" min="0" max="100" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Keterangan</label>
