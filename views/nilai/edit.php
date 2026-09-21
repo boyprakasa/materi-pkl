@@ -8,7 +8,7 @@
                 <select class="form-select" name="siswa_id">
                     <option value="">Pilih Siswa</option>
                     <?php foreach ($data['daftar_siswa'] as $siswa): ?>
-                        <option <?= $siswa['id'] == $data['nilai']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_siswa'] ?> - <?= $siswa['kelas_id'] ?></option>
+                        <option <?= $siswa['id'] == $data['nilai']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_kelas'] . ' ' . $siswa['nama_jurusan'] . ' - ' . $siswa['nama_siswa'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
