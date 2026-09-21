@@ -35,6 +35,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>mapel">Data Mapel</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>jadwal">Jadwal Pelajaran</a>
+                    </li>
                 </ul>
             </div>
         </div>

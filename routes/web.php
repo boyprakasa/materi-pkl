@@ -42,3 +42,11 @@ $router->post('/mapel/store', ['MapelController', 'store']);
 $router->get('/mapel/edit/{id}', ['MapelController', 'edit']);
 $router->post('/mapel/update/{id}', ['MapelController', 'update']);
 $router->get('/mapel/delete/{id}', ['MapelController', 'delete']);
+
+// ----------------------- CRUD Jadwal -----------------------
+$router->get('/jadwal', ['JadwalController', 'index']);
+$router->get('/jadwal/create', ['JadwalController', 'create']);
+$router->post('/jadwal/store', ['JadwalController', 'store']);
+$router->get('/jadwal/edit/{id}', ['JadwalController', 'edit']);
+$router->post('/jadwal/update/{id}', ['JadwalController', 'update']);
+$router->get('/jadwal/delete/{id}', ['JadwalController', 'delete']);
