@@ -12,6 +12,7 @@
                 <tr>
                     <th>#</th>
                     <th>Siswa</th>
+                    <th>Kelas</th>
                     <th>Mata Pelajaran</th>
                     <th>Jenis Nilai</th>
                     <th>Nilai</th>
@@ -23,8 +24,9 @@
                 <?php foreach ($data['nilai'] as $i => $g): ?>
                     <tr>
                         <td><?= $i + 1 ?></td>
-                        <td><?= $g['siswa_id'] ?></td>
-                        <td><?= $g['mapel_id'] ?></td>
+                        <td><?= $g['nama_siswa'] ?></td>
+                        <td><?= $g['kelas'] . ' - ' . $g['nama_jurusan'] ?></td>
+                        <td><?= "[" . $g['kode_mapel'] . "] " . $g['nama_mapel'] ?></td>
                         <td><?= $g['jenis_nilai'] ?></td>
                         <td><?= $g['nilai'] ?></td>
                         <td><?= $g['keterangan'] ?></td>
@@ -37,5 +39,14 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Jumlah Data: <?= count($data['nilai']) ?></div>
+        <div class="card-body">
+            <pre class="bg-dark text-light p-3 rounded">
+                <code><?= preg_replace('/\[\d+\]\s*=>\s*/', '', print_r($data['nilai'], true)) ?></code>
+            </pre>
+        </div>
     </div>
 <?php endif; ?>
