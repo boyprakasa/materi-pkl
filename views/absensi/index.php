@@ -12,7 +12,8 @@
                 <tr>
                     <th>#</th>
                     <th>Tanggal</th>
-                    <th>Siswa</th>
+                    <th>Kelas</th>
+                    <th>Nama</th>
                     <th>Status</th>
                     <th>Keterangan</th>
                     <th class="text-center">Aksi</th>
@@ -22,8 +23,9 @@
                 <?php foreach ($data['absensi'] as $i => $g): ?>
                     <tr>
                         <td><?= $i + 1 ?></td>
-                        <td><?= $g['tanggal'] ?></td>
-                        <td><?= $g['siswa_id'] ?></td>
+                        <td><?= date('d F Y', strtotime($g['tanggal'])) ?></td>
+                        <td><?= $g['kelas'] . ' - ' . $g['nama_jurusan'] ?></td>
+                        <td><?= $g['nama_siswa'] ?></td>
                         <td><?= $g['status'] ?></td>
                         <td><?= $g['keterangan'] ?></td>
                         <td class="text-center">
@@ -35,5 +37,14 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Jumlah Data: <?= count($data['absensi']) ?></div>
+        <div class="card-body">
+            <pre class="bg-dark text-light p-3 rounded">
+                <code><?= preg_replace('/\[\d+\]\s*=>\s*/', '', print_r($data['absensi'], true)) ?></code>
+            </pre>
+        </div>
     </div>
 <?php endif; ?>

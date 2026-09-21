@@ -19,7 +19,19 @@ class Absensi
     /** Ambil semua data absensi */
     public function getAll(): array
     {
-        $stmt = $this->db->query("SELECT * FROM absensi ORDER BY tanggal DESC");
+        $stmt = $this->db->query("
+            SELECT
+                a.*,
+                b.nama_siswa,
+                c.kelas,
+                c.nama_jurusan
+            FROM
+                absensi AS a
+                LEFT JOIN siswa AS b ON a.siswa_id = b.id
+                LEFT JOIN kelas AS c ON b.kelas_id = c.id
+            ORDER BY
+                tanggal DESC
+        ");
         return $stmt->fetchAll();
     }
 
