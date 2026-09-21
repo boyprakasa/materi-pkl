@@ -32,11 +32,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Jam Mulai</label>
-                <input type="time" name="jam" class="form-control" required>
+                <input type="time" name="jam_mulai" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Jam Selesai</label>
-                <input type="time" name="jam" class="form-control" required>
+                <input type="time" name="jam_selesai" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Hari</label>
