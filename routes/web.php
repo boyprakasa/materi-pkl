@@ -50,3 +50,19 @@ $router->post('/jadwal/store', ['JadwalController', 'store']);
 $router->get('/jadwal/edit/{id}', ['JadwalController', 'edit']);
 $router->post('/jadwal/update/{id}', ['JadwalController', 'update']);
 $router->get('/jadwal/delete/{id}', ['JadwalController', 'delete']);
+
+// ----------------------- CRUD Nilai -----------------------
+$router->get('/nilai', ['NilaiController', 'index']);
+$router->get('/nilai/create', ['NilaiController', 'create']);
+$router->post('/nilai/store', ['NilaiController', 'store']);
+$router->get('/nilai/edit/{id}', ['NilaiController', 'edit']);
+$router->post('/nilai/update/{id}', ['NilaiController', 'update']);
+$router->get('/nilai/delete/{id}', ['NilaiController', 'delete']);
+
+// ----------------------- CRUD Nilai -----------------------
+$router->get('/absensi', ['AbsensiController', 'index']);
+$router->get('/absensi/create', ['AbsensiController', 'create']);
+$router->post('/absensi/store', ['AbsensiController', 'store']);
+$router->get('/absensi/edit/{id}', ['AbsensiController', 'edit']);
+$router->post('/absensi/update/{id}', ['AbsensiController', 'update']);
+$router->get('/absensi/delete/{id}', ['AbsensiController', 'delete']);

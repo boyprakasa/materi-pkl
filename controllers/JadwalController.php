@@ -56,6 +56,11 @@ class JadwalController
     public function edit($id)
     {
         $data['title'] = 'Edit Jadwal';
+
+        $data['daftar_kelas']  = $this->kelasModel->getAll();
+        $data['daftar_mapel']  = $this->mapelModel->getAll();
+        $data['daftar_guru']  = $this->guruModel->getAll();
+
         $data['jadwal']  = $this->jadwalModel->find($id);
 
         if (!$data['jadwal']) {

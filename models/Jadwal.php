@@ -35,15 +35,16 @@ class Jadwal
     public function create(array $data): bool
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO jadwal (kelas_id, mapel_id, guru_id, hari, jam)
-             VALUES (?, ?, ?, ?, ?)"
+            "INSERT INTO jadwal (kelas_id, mapel_id, guru_id, hari, jam_mulai, jam_selesai)
+             VALUES (?, ?, ?, ?, ?, ?)"
         );
         return $stmt->execute([
             $data['kelas_id'],
             $data['mapel_id'],
             $data['guru_id'],
             $data['hari'],
-            $data['jam'],
+            $data['jam_mulai'],
+            $data['jam_selesai'],
         ]);
     }
 
@@ -51,7 +52,7 @@ class Jadwal
     public function update($id, array $data): bool
     {
         $stmt = $this->db->prepare(
-            "UPDATE jadwal SET kelas_id = ?, mapel_id = ?, guru_id = ?, hari = ?, jam = ?
+            "UPDATE jadwal SET kelas_id = ?, mapel_id = ?, guru_id = ?, hari = ?, jam_mulai = ?, jam_selesai = ?
              WHERE id = ?"
         );
         return $stmt->execute([
@@ -59,7 +60,8 @@ class Jadwal
             $data['mapel_id'],
             $data['guru_id'],
             $data['hari'],
-            $data['jam'],
+            $data['jam_mulai'],
+            $data['jam_selesai'],
             $id,
         ]);
     }
