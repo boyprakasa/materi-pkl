@@ -34,4 +34,6 @@
             </tbody>
         </table>
     </div>
+
+    <?= debug_card($data['tahun_ajaran'], 'Data Tahun Ajaran') ?>
 <?php endif; ?>

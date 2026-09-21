@@ -43,6 +43,7 @@ require_once __DIR__ . '/config/database.php';
 // ---------------------------------------------------------------------
 // 2. CORE (Router buatan sendiri, bukan framework)
 // ---------------------------------------------------------------------
+require_once __DIR__ . '/core/Helper.php';
 require_once __DIR__ . '/core/Router.php';
 
 $router = new Router();

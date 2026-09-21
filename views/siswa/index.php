@@ -41,12 +41,5 @@
         </table>
     </div>
 
-    <div class="card">
-        <div class="card-header">Jumlah Siswa: <?= count($data['siswa']) ?></div>
-        <div class="card-body">
-            <pre class="bg-dark text-light p-3 rounded">
-                <code><?= preg_replace('/\[\d+\]\s*=>\s*/', '', print_r($data['siswa'], true)) ?></code>
-            </pre>
-        </div>
-    </div>
+    <?= debug_card($data['siswa'], 'Data Siswa') ?>
 <?php endif; ?>
