@@ -32,6 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>siswa">Data Siswa</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>mapel">Data Mapel</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * routes/web.php
  * Semua alamat (URL) aplikasi didaftarkan di sini, terpisah dari index.php.
@@ -33,3 +34,11 @@ $router->post('/kelas/store', ['KelasController', 'store']);
 $router->get('/kelas/edit/{id}', ['KelasController', 'edit']);
 $router->post('/kelas/update/{id}', ['KelasController', 'update']);
 $router->get('/kelas/delete/{id}', ['KelasController', 'delete']);
+
+// ----------------------- CRUD Mapel -----------------------
+$router->get('/mapel', ['MapelController', 'index']);
+$router->get('/mapel/create', ['MapelController', 'create']);
+$router->post('/mapel/store', ['MapelController', 'store']);
+$router->get('/mapel/edit/{id}', ['MapelController', 'edit']);
+$router->post('/mapel/update/{id}', ['MapelController', 'update']);
+$router->get('/mapel/delete/{id}', ['MapelController', 'delete']);
