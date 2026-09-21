@@ -35,6 +35,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 // ---------------------------------------------------------------------
+// 0. LOAD .env
+// ---------------------------------------------------------------------
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// ---------------------------------------------------------------------
 // 1. CONFIG (pengaturan aplikasi + koneksi database)
 // ---------------------------------------------------------------------
 require_once __DIR__ . '/config/config.php';

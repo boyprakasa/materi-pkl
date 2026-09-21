@@ -1,4 +1,4 @@
-<h3>Edit Data Jadwal</h3>
+<h3>Edit Data Nilai</h3>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body">
@@ -8,7 +8,7 @@
                 <select class="form-select" name="siswa_id">
                     <option value="">Pilih Siswa</option>
                     <?php foreach ($data['daftar_siswa'] as $siswa): ?>
-                        <option <?= $siswa['id'] == $data['nilai']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_siswa'] ?> - <?= $siswa['kelas_id'] ?></option>
+                        <option <?= $siswa['id'] == $data['nilai']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_kelas'] . ' ' . $siswa['nama_jurusan'] . ' - ' . $siswa['nama_siswa'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -32,7 +32,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Nilai</label>
-                <input type="number" min="0" max="100" minlength="1" maxlength="3" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>" required>
+                <input type="number" min="0" max="100" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Keterangan</label>

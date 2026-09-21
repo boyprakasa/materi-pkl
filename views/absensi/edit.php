@@ -1,5 +1,5 @@
-<h3>Edit Data Mapel</h3>
-<?= print_r($data['absensi']['status']) ?>
+<h3>Edit Data Absensi</h3>
+
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <form action="<?= BASE_URL ?>absensi/update/<?= $data['absensi']['id'] ?>" method="POST">
@@ -8,7 +8,7 @@
                 <select class="form-select" name="siswa_id">
                     <option value="">Pilih Siswa</option>
                     <?php foreach ($data['daftar_siswa'] as $siswa): ?>
-                        <option <?= $siswa['id'] == $data['absensi']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_siswa'] ?> - <?= $siswa['kelas_id'] ?></option>
+                        <option <?= $siswa['id'] == $data['absensi']['siswa_id'] ? 'selected' : '' ?> value="<?= $siswa['id'] ?>"><?= $siswa['nama_kelas'] . ' ' . $siswa['nama_jurusan'] . ' - ' . $siswa['nama_siswa'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
