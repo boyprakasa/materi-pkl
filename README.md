@@ -9,7 +9,8 @@ sendiri**. Dibuat khusus sebagai bahan belajar untuk pemula.
 ```
 sekolah-app/
 ├── index.php              # Tumpuan aplikasi: config, koneksi DB, dan dispatcher routing
-├── .htaccess               # (opsional, untuk Apache) agar URL bersih tanpa index.php
+├── .htaccess               # (opsional, HANYA jika suatu saat pindah ke Apache — tidak dipakai Nginx)
+├── nginx-laragon.conf       # Acuan konfigurasi Nginx untuk Laragon
 ├── config/
 │   ├── config.php           # Pengaturan umum (nama app, BASE_URL)
 │   └── database.php         # Koneksi PDO ke MySQL
@@ -52,11 +53,16 @@ Semua request — apapun URL-nya — selalu masuk lewat `index.php` terlebih
 dahulu (itulah kenapa disebut _front controller_ / tumpuan). Dari situ,
 router-lah yang menentukan controller & method mana yang dijalankan.
 
-## Cara Instalasi
+## Cara Instalasi (Standar: Laragon + Nginx)
+
+> Project ini distandarkan pakai **Laragon dengan web server Nginx**
+> (bukan Apache). Pastikan saat instalasi/switch Laragon, pilih Nginx
+> di menu **Laragon > Preferences > Services and ports** atau lewat
+> klik kanan tray icon Laragon > **Switch to Nginx**.
 
 ### 1. Buat database
 
-Import `database/db_sekolah.sql` lewat phpMyAdmin, atau via terminal:
+Import `database/db_sekolah.sql` lewat phpMyAdmin/HeidiSQL, atau via terminal:
 
 ```bash
 mysql -u root -p < database/db_sekolah.sql
@@ -64,28 +70,35 @@ mysql -u root -p < database/db_sekolah.sql
 
 ### 2. Sesuaikan koneksi database (jika perlu)
 
-Edit `config/database.php` — sesuaikan `DB_HOST`, `DB_USER`, `DB_PASS`
-dengan pengaturan MySQL di komputer kamu (default: user `root`, password
-kosong, sesuai standar XAMPP/Laragon).
+Edit `config/database.php` — sesuaikan `DB_HOST`, `DB_USER`, `DB_PASS`.
+Default Laragon: user `root`, password kosong.
 
-### 3. Jalankan aplikasi
+### 3. Letakkan project & buat virtual host
 
-**Opsi A — pakai PHP built-in server (paling gampang, tanpa Apache):**
+1. Copy folder `sekolah-app` ke `laragon/www/`
+2. Buka Laragon, klik **Reload/Restart** — Laragon otomatis mendeteksi
+   folder baru dan membuat virtual host `sekolah-app.test`
+3. Karena Nginx, Laragon otomatis generate config `try_files` yang
+   mengarahkan semua request ke `index.php` (lihat contoh lengkapnya
+   di `nginx-laragon.conf` pada root project ini — kalau perlu buat
+   manual, tinggal salin isinya)
+4. `BASE_URL` di `config/config.php` **cukup diisi `/`** — karena
+   Laragon Nginx pakai domain virtual (`sekolah-app.test`), bukan
+   subfolder, jadi tidak ada prefix path tambahan
+
+### 4. Jalankan aplikasi
+
+Buka `http://sekolah-app.test/` di browser (klik kanan project di
+Laragon > **Open with browser** juga bisa).
+
+### Alternatif tanpa Laragon (opsional, untuk cek cepat)
 
 ```bash
 cd sekolah-app
 php -S localhost:8000 index.php
 ```
 
-Buka `http://localhost:8000` di browser. Parameter `index.php` di
-belakang perintah tersebut membuat semua request lewat router kita.
-
-**Opsi B — pakai XAMPP/Laragon (Apache):**
-
-1. Copy folder `sekolah-app` ke `htdocs/` (XAMPP) atau `www/` (Laragon)
-2. Buka `http://localhost/sekolah-app/`
-3. Ubah `BASE_URL` di `config/config.php` menjadi `/sekolah-app/`
-4. Pastikan module `mod_rewrite` Apache aktif (agar `.htaccess` berfungsi)
+Buka `http://localhost:8000`. `BASE_URL` tetap `/`.
 
 ## Alur Belajar yang Disarankan
 
@@ -298,3 +311,34 @@ ini hanya starting point.
 | password     | VARCHAR(255) NOT NULL               | Simpan hasil `password_hash()`, jangan plain text |
 | nama_lengkap | VARCHAR(100) NULL                   |                                                   |
 | created_at   | TIMESTAMP DEFAULT CURRENT_TIMESTAMP |                                                   |
+
+## Roadmap Materi Setelah Modul Lanjutan
+
+Setelah 6 modul lanjutan (`mapel`, `jadwal`, `nilai`, `absensi`,
+`tahun_ajaran`, `admin`) diterapkan, siswa sudah menguasai CRUD +
+relasi banyak tabel + session dasar. Materi berikutnya, urut dari
+yang paling nyambung ke yang paling jauh dari pola CRUD dasar:
+
+1. **Autentikasi & Otorisasi bertingkat (role-based)** — modul
+   `admin` dikembangkan jadi multi-role (admin/guru/siswa), tiap
+   role lihat menu berbeda; bikin "middleware" sendiri di
+   `Router.php` untuk cek session sebelum masuk controller tertentu.
+2. **Pencarian, filter, dan pagination** — form filter (per kelas,
+   per tanggal, per mapel) + pagination manual pakai `LIMIT`/`OFFSET`,
+   penting begitu data nilai/absensi mulai banyak.
+3. **Upload file** — foto profil guru/siswa, atau dokumen pendukung
+   di modul absensi; melatih `$_FILES`, validasi tipe/ukuran file.
+4. **Export & cetak** — export Excel/CSV (rekap nilai/absensi) atau
+   cetak PDF (rapor siswa, surat keterangan).
+5. **Dashboard & visualisasi data** — grafik nilai per kelas / rekap
+   kehadiran pakai Chart.js, dari query `GROUP BY`/`AVG()`.
+6. **AJAX / fetch tanpa reload** — aksi delete/filter/search tanpa
+   reload halaman penuh, pengantar sebelum konsep SPA/REST API.
+7. **REST API sederhana** — endpoint JSON dari modul yang sudah ada
+   (`/api/siswa`, dst), modal dasar untuk versi mobile app nantinya.
+8. **Keamanan lanjutan** — CSRF token di form, rate limiting
+   sederhana untuk login, audit log (siapa mengubah data apa & kapan).
+9. **(Opsional, tahap akhir) Migrasi konsep ke framework** — setelah
+   paham cara kerja routing/model/controller manual, transisi ke
+   Laravel jadi lebih masuk akal karena siswa sudah tahu apa yang
+   "disembunyikan" framework di baliknya.
