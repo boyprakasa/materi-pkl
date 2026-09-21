@@ -24,19 +24,22 @@
                         <a class="nav-link" href="<?= BASE_URL ?>">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>guru">Data Guru</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>guru">Guru</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>kelas">Data Kelas</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>kelas">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>siswa">Data Siswa</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>siswa">Siswa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>mapel">Data Mapel</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>mapel">Mata Pelajaran</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>jadwal">Jadwal Pelajaran</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>jadwal">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>nilai">Nilai</a>
                     </li>
                 </ul>
             </div>
