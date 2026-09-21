@@ -4,7 +4,6 @@ config/local.php
 
 # ================= Dependency (jika nanti pakai Composer) =================
 /vendor/
-composer.lock
 
 # ================= Log & Cache =================
 *.log
