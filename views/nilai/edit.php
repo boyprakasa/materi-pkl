@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Mata Pelajaran</label>
-                <select class="form-select" name="mapel_id">
+                <select class="form-select" name="mapel_id" required>
                     <option value="">Pilih Mata Pelajaran</option>
                     <?php foreach ($data['daftar_mapel'] as $mapel): ?>
                         <option <?= $mapel['id'] == $data['nilai']['mapel_id'] ? 'selected' : '' ?> value="<?= $mapel['id'] ?>"><?= $mapel['nama_mapel'] ?> - <?= $mapel['kode_mapel'] ?></option>
@@ -32,7 +32,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Nilai</label>
-                <input type="number" min="0" max="100" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>">
+                <input type="number" min="0" max="100" minlength="1" maxlength="3" name="nilai" class="form-control" value="<?= $data['nilai']['nilai'] ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Keterangan</label>
