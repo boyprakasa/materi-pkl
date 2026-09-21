@@ -66,3 +66,11 @@ $router->post('/absensi/store', ['AbsensiController', 'store']);
 $router->get('/absensi/edit/{id}', ['AbsensiController', 'edit']);
 $router->post('/absensi/update/{id}', ['AbsensiController', 'update']);
 $router->get('/absensi/delete/{id}', ['AbsensiController', 'delete']);
+
+// ----------------------- CRUD Tahun Ajaran -----------------------
+$router->get('/tahun-ajaran', ['TahunAjaranController', 'index']);
+$router->get('/tahun-ajaran/create', ['TahunAjaranController', 'create']);
+$router->post('/tahun-ajaran/store', ['TahunAjaranController', 'store']);
+$router->get('/tahun-ajaran/edit/{id}', ['TahunAjaranController', 'edit']);
+$router->post('/tahun-ajaran/update/{id}', ['TahunAjaranController', 'update']);
+$router->get('/tahun-ajaran/delete/{id}', ['TahunAjaranController', 'delete']);
