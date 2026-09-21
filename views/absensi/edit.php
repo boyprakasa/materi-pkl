@@ -1,4 +1,4 @@
-<h3>Edit Data Mapel</h3>
+<h3>Edit Data Absensi</h3>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body">
