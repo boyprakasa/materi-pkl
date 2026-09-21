@@ -19,7 +19,22 @@ class Jadwal
     /** Ambil semua data jadwal */
     public function getAll(): array
     {
-        $stmt = $this->db->query("SELECT * FROM jadwal ORDER BY kelas_id ASC");
+        $stmt = $this->db->query("
+                SELECT
+                    a.*,
+                    b.kelas,
+                    b.nama_jurusan,
+                    c.kode_mapel,
+                    c.nama_mapel,
+                    d.nama_guru
+                FROM
+                    jadwal AS a
+                    LEFT JOIN kelas AS b ON a.kelas_id = b.id
+                    LEFT JOIN mapel AS c ON a.mapel_id = c.id
+                    LEFT JOIN guru AS d ON a.guru_id = d.id
+                ORDER BY
+                    a.kelas_id ASC
+                ");
         return $stmt->fetchAll();
     }
 

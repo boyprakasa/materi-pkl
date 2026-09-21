@@ -27,9 +27,9 @@
                         <td class="text-center">
                             <?= $g['jam_mulai'] . ' - ' . $g['jam_selesai'] ?>
                         </td>
-                        <td><?= htmlspecialchars($g['kelas_id']) ?></td>
-                        <td><?= htmlspecialchars($g['mapel_id']) ?></td>
-                        <td><?= htmlspecialchars($g['guru_id']) ?></td>
+                        <td><?= htmlspecialchars($g['kelas']) . ' - ' . htmlspecialchars($g['nama_jurusan']) ?></td>
+                        <td><?= htmlspecialchars($g['nama_mapel']) ?></td>
+                        <td><?= htmlspecialchars($g['nama_guru']) ?></td>
                         <td class="text-center">
                             <a href="<?= BASE_URL ?>jadwal/edit/<?= $g['id'] ?>" class="btn btn-sm btn-warning">Edit</a>
                             <a href="<?= BASE_URL ?>jadwal/delete/<?= $g['id'] ?>" class="btn btn-sm btn-danger"
@@ -39,5 +39,14 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Jumlah Jadwal: <?= count($data['jadwal']) ?></div>
+        <div class="card-body">
+            <pre class="bg-dark text-light p-3 rounded">
+                <code><?= preg_replace('/\[\d+\]\s*=>\s*/', '', print_r($data['jadwal'], true)) ?></code>
+            </pre>
+        </div>
     </div>
 <?php endif; ?>
