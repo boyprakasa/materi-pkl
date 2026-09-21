@@ -41,6 +41,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>nilai">Nilai</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>absensi">Absensi</a>
+                    </li>
                 </ul>
             </div>
         </div>
