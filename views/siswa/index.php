@@ -40,4 +40,6 @@
             </tbody>
         </table>
     </div>
+
+    <?= debug_card($data['siswa'], 'Data Siswa') ?>
 <?php endif; ?>

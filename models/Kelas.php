@@ -19,12 +19,13 @@ class Kelas
     /** Ambil semua data kelas + nama wali kelasnya (JOIN ke tabel guru) */
     public function getAll(): array
     {
-        $stmt = $this->db->query(
-            "SELECT kelas.*, guru.nama_guru AS wali_kelas
-             FROM kelas
-             LEFT JOIN guru ON kelas.wali_kelas_id = guru.id
-             ORDER BY kelas.nama_jurusan ASC, kelas.kelas ASC"
-        );
+        $stmt = $this->db->query("
+                SELECT kelas.*,
+                guru.nama_guru AS wali_kelas
+                FROM kelas
+                LEFT JOIN guru ON kelas.wali_kelas_id = guru.id
+                ORDER BY kelas.nama_jurusan ASC, kelas.kelas ASC
+             ");
         return $stmt->fetchAll();
     }
 

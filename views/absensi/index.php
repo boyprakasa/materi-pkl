@@ -12,7 +12,8 @@
                 <tr>
                     <th>#</th>
                     <th>Tanggal</th>
-                    <th>Siswa</th>
+                    <th>Kelas</th>
+                    <th>Nama</th>
                     <th>Status</th>
                     <th>Keterangan</th>
                     <th class="text-center">Aksi</th>
@@ -22,8 +23,9 @@
                 <?php foreach ($data['absensi'] as $i => $g): ?>
                     <tr>
                         <td><?= $i + 1 ?></td>
-                        <td><?= $g['tanggal'] ?></td>
-                        <td><?= $g['siswa_id'] ?></td>
+                        <td><?= date('d F Y', strtotime($g['tanggal'])) ?></td>
+                        <td><?= $g['kelas'] . ' - ' . $g['nama_jurusan'] ?></td>
+                        <td><?= $g['nama_siswa'] ?></td>
                         <td><?= $g['status'] ?></td>
                         <td><?= $g['keterangan'] ?></td>
                         <td class="text-center">
@@ -36,4 +38,6 @@
             </tbody>
         </table>
     </div>
+
+    <?= debug_card($data['absensi'], 'Data Absensi') ?>
 <?php endif; ?>
