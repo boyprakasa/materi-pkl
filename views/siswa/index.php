@@ -27,7 +27,7 @@
                         <td><?= htmlspecialchars($s['nis']) ?></td>
                         <td><?= htmlspecialchars($s['nama_siswa']) ?></td>
                         <td><?= htmlspecialchars($s['jenis_kelamin']) ?></td>
-                        <td><?= htmlspecialchars($s['tanggal_lahir']) ?></td>
+                        <td><?= htmlspecialchars(date('d/m/Y', strtotime($s['tanggal_lahir']))) ?></td>
                         <td><?= htmlspecialchars($s['alamat']) ?></td>
                         <td><?= $s['nama_kelas'] ? htmlspecialchars($s['nama_kelas'] . ' - ' . $s['nama_jurusan']) : '<span class="text-muted">-</span>' ?></td>
                         <td class="text-center">
