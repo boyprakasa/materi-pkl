@@ -1,10 +1,5 @@
 <h3>Edit Data Jadwal</h3>
-<!-- <pre>
-    <?= print_r($data) ?>
-    <?= print_r($data['daftar_kelas']) ?>
-    <?= print_r($data['daftar_mapel']) ?>
-    <?= print_r($data['daftar_guru']) ?>
-</pre> -->
+
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <form action="<?= BASE_URL ?>jadwal/update/<?= $data['jadwal']['id'] ?>" method="POST">
